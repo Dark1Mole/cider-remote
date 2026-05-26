@@ -39,6 +39,12 @@ export default function SettingsModal() {
 
                 <ScrollView>
                     <List.Section>
+                        <List.Item
+                            title="API Debug"
+                            description="Validate Cider v2 endpoints"
+                            onPress={() => router.push("/modals/api-debug")}
+                            left={props => <List.Icon {...props} icon="bug" />}
+                        />
                         <List.Item title="Disconnect" 
                         onPress={() => { 
                             IOState.disconnect();

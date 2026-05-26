@@ -110,6 +110,14 @@ function ThemedProviders() {
             }}
           />
           <Stack.Screen
+            name="modals/api-debug"
+            options={{
+              presentation: "modal",
+              animation: "slide_from_bottom",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="modals/settings"
             options={{
               presentation: "modal",
