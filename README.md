@@ -33,6 +33,28 @@ docs/             # Testing checklist
 ```bash
 corepack enable
 yarn install
+```
+
+### Android SDK setup
+
+If you see `Failed to resolve the Android SDK path` or `spawn adb ENOENT`:
+
+```bash
+# First-time install (Linux)
+bash scripts/install-android-sdk.sh
+source ~/.bashrc
+
+# Before each build (writes android/local.properties)
+bash scripts/setup-android-env.sh
+yarn android
+```
+
+Or set manually:
+
+```bash
+export ANDROID_HOME="$HOME/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
 yarn android
 ```
 
