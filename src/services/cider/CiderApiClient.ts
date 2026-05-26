@@ -145,6 +145,73 @@ export class CiderApiClient {
     }
   }
 
+
+  async request<T>(
+    method: HttpMethod,
+    path: string,
+    body?: unknown,
+    options?: { retry?: boolean }
+  ): Promise<import("./CiderTypes").CiderApiResult<T>> {
+    const baseUrl = this.getBaseUrl();
+    const endpoint = `${baseUrl}${path}`;
+    const startedAt = Date.now();
+    const attempt = async () => {
+      const response = await this.fetchWithTimeout(endpoint, {
+        method,
+        headers: this.buildHeaders(method),
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+      });
+      const raw = await response.text();
+      const responseTimeMs = Date.now() - startedAt;
+      const payload = parseCiderErrorPayload(raw || null);
+      let data: T | null = null;
+      if (raw) {
+        try { data = JSON.parse(raw) as T; } catch { data = null; }
+      }
+      const ok = response.ok;
+      return {
+        ok,
+        data: ok ? data : null,
+        statusCode: response.status,
+        responseTimeMs,
+        raw: raw || null,
+        error: ok ? null : extractErrorCode(payload) ?? `HTTP ${response.status}`,
+        errorCode: ok ? null : extractErrorCode(payload),
+        missingScopeError: isMissingScopeError(payload),
+        timeoutError: false,
+      };
+    };
+
+    try {
+      let result = await attempt();
+      if (!result.ok && options?.retry && method === "GET") {
+        result = await attempt();
+      }
+      if (__DEV__) {
+        console.log(`[CiderApi] ${method} ${path} -> ${result.statusCode} (${result.responseTimeMs}ms)`);
+      }
+      return result;
+    } catch (error) {
+      const timeoutError = isTimeoutError(error);
+      return {
+        ok: false,
+        data: null,
+        statusCode: null,
+        responseTimeMs: Date.now() - startedAt,
+        raw: null,
+        error: formatNetworkError(error),
+        errorCode: timeoutError ? "TIMEOUT" : "NETWORK_ERROR",
+        missingScopeError: false,
+        timeoutError,
+      };
+    }
+  }
+
+  async checkV2Availability(): Promise<boolean> {
+    const result = await this.request("GET", "/api/v2/client/info", undefined, { retry: true });
+    return result.ok;
+  }
+
   private buildHeaders(method: HttpMethod): Record<string, string> {
     const headers: Record<string, string> = {
       Accept: "application/json",

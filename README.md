@@ -2,31 +2,31 @@
 
 A Cider Remote Android app with PixelPlayer-inspired Material 3 Expressive UI, controlling a Cider desktop client over the local network.
 
-## Reference Repositories
+## Features
 
-| Repo | Purpose |
-|------|---------|
-| [Cider-Remote-RN](https://github.com/ciderapp/Cider-Remote-RN) | Functional base (React Native + Expo) |
-| [PixelPlayer](https://github.com/theovilardo/PixelPlayer) | Design reference (Material 3 Expressive) |
-
-Clone locally into `reference/` — see [reference/README.md](reference/README.md).
+- Cider v2 API client with debug tooling and v1 fallbacks
+- Material 3 Expressive dark-first design system
+- Playback, queue, and library controls via Zustand stores
+- WebSocket live updates with REST polling fallback
+- Multi-platform music link handling (Apple Music → Cider, others → external)
+- Android media notification controls (remote Cider mode)
+- Huawei/EMUI compatibility helpers
 
 ## Project Structure
 
 ```txt
-reference/          # Local clones (gitignored)
-src/                # Target architecture (new code goes here)
-app/                # Expo Router screens (legacy from Cider-Remote-RN)
-components/         # Shared UI (legacy, migrating to src/)
-lib/                # API/services (legacy, migrating to src/services/)
-00-README.md …      # Step-by-step build plan
+src/
+  components/     # UI building blocks (GlassCard, MiniPlayer, etc.)
+  screens/        # App screens
+  services/       # Cider API, storage, playback, events
+  stores/           # Zustand global state
+  theme/          # Material 3 design tokens
+  linkHandling/   # Music link parser and router
+  navigation/     # Navigation helpers
+  platform/       # Android-specific helpers
+app/              # Expo Router routes
+docs/             # Testing checklist
 ```
-
-## Requirements
-
-- Node 22+
-- Yarn 4+
-- Android SDK (Android 10+ target)
 
 ## Get Started
 
@@ -36,14 +36,26 @@ yarn install
 yarn android
 ```
 
-## Build Plan
+## Build Plan Status
 
-Follow the numbered plan files in order. Each step must be completed, tested, and committed before moving to the next.
+| Step | Status |
+|------|--------|
+| 01 Repo Strategy | Done |
+| 02 API Validation | Done |
+| 03 Architecture | Done |
+| 04 Design System | Done |
+| 05 Navigation & Screens | Done |
+| 06 Cider API Services | Done |
+| 07 State Management | Done |
+| 08 Live Updates | Done |
+| 09 Music Link Handling | Done |
+| 10 Android Media Controls | Done |
+| 11 Testing Checklist | Done (`docs/TESTING_CHECKLIST.md`) |
+| 12 Final Polish | Done |
 
-1. `01-repo-strategy.md` — Repo setup
-2. `02-api-validation-first.md` — API debug screen
-3. `03-project-architecture.md` — App structure
-4. … see `00-README.md` for the full list
+## Testing
+
+See [docs/TESTING_CHECKLIST.md](docs/TESTING_CHECKLIST.md) for manual verification steps against a live Cider instance.
 
 ## License
 

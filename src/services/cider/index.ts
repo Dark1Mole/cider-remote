@@ -1,21 +1,10 @@
 export { CiderApiClient, buildBaseUrl, normalizeHost } from "./CiderApiClient";
-export {
-  extractErrorCode,
-  formatNetworkError,
-  isMissingScopeError,
-  isTimeoutError,
-  parseCiderErrorPayload,
-} from "./CiderErrors";
-export {
-  API_V1_FALLBACKS,
-  API_V2_TESTS,
-  CIDER_DEFAULT_PORT,
-  CIDER_DEFAULT_TIMEOUT_MS,
-} from "./CiderTypes";
-export type {
-  CiderApiConfig,
-  CiderApiDebugResult,
-  CiderApiRequest,
-  HttpMethod,
-} from "./CiderTypes";
-export type { CiderErrorPayload } from "./CiderErrors";
+export { configureCiderClient, getCiderClient } from "./clientInstance";
+export { ciderAuthService, CiderAuthService } from "./CiderAuthService";
+export { ciderPlaybackService, CiderPlaybackService } from "./CiderPlaybackService";
+export { ciderQueueService, CiderQueueService } from "./CiderQueueService";
+export { ciderLibraryService, CiderLibraryService } from "./CiderLibraryService";
+export { ciderAudioService, CiderAudioService } from "./CiderAudioService";
+export { ciderEventsService, CiderEventsService } from "./CiderEventsService";
+export * from "./CiderErrors";
+export * from "./CiderTypes";

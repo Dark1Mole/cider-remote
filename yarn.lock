@@ -3691,6 +3691,7 @@ __metadata:
     expo-image: "npm:~2.4.0"
     expo-linking: "npm:~7.1.7"
     expo-router: "npm:~5.1.4"
+    expo-secure-store: "npm:^56.0.4"
     expo-splash-screen: "npm:~0.30.10"
     expo-status-bar: "npm:~2.2.3"
     expo-symbols: "npm:~0.4.5"
@@ -3715,6 +3716,7 @@ __metadata:
     socket.io-client: "npm:^4.8.1"
     typescript: "npm:~5.8.3"
     xml2js: "npm:^0.6.2"
+    zustand: "npm:^5.0.13"
   languageName: unknown
   linkType: soft
 
@@ -5093,6 +5095,15 @@ __metadata:
     react-server-dom-webpack:
       optional: true
   checksum: 10c0/0d7089b082a55932156cd382134b94a5f62a1c2ad518338989c97fb689a8c4b6f608dd8c815f67b40cedb737b32f00e2278d0400b7deadb89be5fb426975da80
+  languageName: node
+  linkType: hard
+
+"expo-secure-store@npm:^56.0.4":
+  version: 56.0.4
+  resolution: "expo-secure-store@npm:56.0.4"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/8f3c81e64dfd6a0300bdf8b172e2f95d9342e4fd818148803df88cc2be0dc9189c5fdc318c33b6f7c7b9015172d6268fd686d8f250a349c0fb2c993a7ef2f280
   languageName: node
   linkType: hard
 
@@ -9966,5 +9977,26 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^5.0.13":
+  version: 5.0.13
+  resolution: "zustand@npm:5.0.13"
+  peerDependencies:
+    "@types/react": ">=18.0.0"
+    immer: ">=9.0.6"
+    react: ">=18.0.0"
+    use-sync-external-store: ">=1.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+    use-sync-external-store:
+      optional: true
+  checksum: 10c0/e4e76af1c324c797e3cc6ef094cb15c5884ca6713697140c2be292b2c612f5445fa21d222671b97797a4376154cac14a140f05728f0ac17b4b9e10f45e0ff29e
   languageName: node
   linkType: hard

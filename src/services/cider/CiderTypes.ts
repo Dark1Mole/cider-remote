@@ -116,3 +116,54 @@ export const API_V1_FALLBACKS: Partial<Record<string, CiderApiRequest>> = {
     path: "/api/v1/playback/volume",
   },
 };
+
+export type RepeatMode = "off" | "one" | "all";
+
+export type PlaybackStatus = "playing" | "paused" | "stopped" | "unknown";
+
+export type Track = {
+  id: string;
+  title: string;
+  artist: string;
+  album: string;
+  artworkUrl?: string;
+  durationMs?: number;
+};
+
+export type QueueItem = {
+  id: string;
+  track: Track;
+  index: number;
+};
+
+export type PlaylistSummary = {
+  id: string;
+  name: string;
+  artworkUrl?: string;
+  trackCount?: number;
+};
+
+export type AlbumSummary = {
+  id: string;
+  name: string;
+  artist: string;
+  artworkUrl?: string;
+};
+
+export type ArtistSummary = {
+  id: string;
+  name: string;
+  artworkUrl?: string;
+};
+
+export type CiderApiResult<T> = {
+  ok: boolean;
+  data: T | null;
+  statusCode: number | null;
+  responseTimeMs: number;
+  raw: string | null;
+  error: string | null;
+  errorCode: string | null;
+  missingScopeError: boolean;
+  timeoutError: boolean;
+};

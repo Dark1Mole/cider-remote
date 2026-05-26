@@ -7,11 +7,10 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { safeMaterialYouChecker, useMaterialYouTheme } from "@/hooks/useMaterialYouTheme";
-import { nextTrack, playPause, previousTrack, seekTo, UpdateNotification } from "@/lib/playback-control";
 import { MaterialYouService } from "@assembless/react-native-material-you";
 import { useEffect } from "react";
+import { useMediaControlsBridge } from "@/src/hooks/useMediaControlsBridge";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import MusicControl, { Command } from "react-native-music-control";
 import { PaperProvider } from "react-native-paper";
 import { configureReanimatedLogger } from "react-native-reanimated";
 
@@ -23,45 +22,17 @@ configureReanimatedLogger({
 });
 
 function ThemedProviders() {
+  useMediaControlsBridge();
   const { paperTheme, navTheme } = useMaterialYouTheme();
 
-  useEffect(() => {
-    MusicControl.enableBackgroundMode(true);
 
-    MusicControl.handleAudioInterruptions(false);
-
-    MusicControl.enableControl("play", true);
-    MusicControl.enableControl("pause", true);
-    MusicControl.enableControl("nextTrack", true);
-    MusicControl.enableControl("previousTrack", true);
-
-    // Changing track position on lockscreen
-    MusicControl.enableControl("changePlaybackPosition", true);
-    MusicControl.enableControl("seek", true);
-    MusicControl.on(Command.play, ()=> {
-        try {playPause().then(() => UpdateNotification(null))} catch (e) {console.error(e)}})
-    MusicControl.on(Command.pause, ()=> {
-        try {playPause().then(() => UpdateNotification(null))} catch (e) {console.error(e)}})
-    MusicControl.on(Command.nextTrack, ()=> {
-        try {nextTrack().then(() => UpdateNotification(null))} catch (e) {console.error(e)}})
-    MusicControl.on(Command.previousTrack, ()=> {
-        try {previousTrack().then(() => UpdateNotification(null))} catch (e) {console.error(e)}})
-    MusicControl.on(Command.seek, (pos)=> {
-        try {
-          seekTo(pos);
-          MusicControl.updatePlayback({
-              elapsedTime: pos,
-          });
-        } catch (e) {
-          console.error(e);
-        }
-    });
-  }, []);
 
   return (
     <PaperProvider theme={paperTheme}>
       <ThemeProvider value={navTheme}>
         <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen
@@ -106,6 +77,14 @@ function ThemedProviders() {
               presentation: "modal",
               animation: "slide_from_bottom",
               title: "Scan QR Code",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="modals/link-handler"
+            options={{
+              presentation: "modal",
+              animation: "slide_from_bottom",
               headerShown: false,
             }}
           />
